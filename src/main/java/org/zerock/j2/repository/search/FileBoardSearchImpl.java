@@ -22,7 +22,7 @@ import org.zerock.j2.entity.FileBoard;
 import org.zerock.j2.entity.QFileBoard;
 import org.zerock.j2.entity.QFileBoardImage;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud.Projection;
+
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
 
