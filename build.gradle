@@ -52,6 +52,9 @@ dependencies {
             "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta")
 	
 	implementation 'net.coobird:thumbnailator:0.4.16'
+
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {
