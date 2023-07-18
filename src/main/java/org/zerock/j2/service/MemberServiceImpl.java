@@ -8,6 +8,7 @@ import org.zerock.j2.entity.Member;
 import org.zerock.j2.repository.MemberRepository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -49,5 +50,41 @@ public class MemberServiceImpl implements MemberService{
             throw new MemberLoginException(e.getMessage());
         }
         return memberDTO;
+    }
+
+    @Override
+    public MemberDTO getMemberWithEmail(String email) {
+
+        Optional<Member> result = memberRepository.findById(email);
+
+        if(result.isPresent()){
+            Member member = result.get();
+
+            MemberDTO dto = MemberDTO.builder()
+                    .email(member.getEmail())
+                    .nickName(member.getNickName())
+                    .admin(member.isAdmin())
+                    .build();
+
+            return dto;
+
+        }
+
+        // 데이터베이스에 존재하지 않는 이메일이라면
+        Member socialMember = Member.builder()
+                .email(email)
+                .pw(UUID.randomUUID().toString())
+                .nickName("SOCIAL_MEMBER")
+                .build();
+        memberRepository.save(socialMember);
+
+        MemberDTO dto = MemberDTO.builder()
+                .email(socialMember.getEmail())
+                .nickName(socialMember.getNickName())
+                .admin(socialMember.isAdmin())
+                .build();
+
+        return dto;
+
     }
 }
